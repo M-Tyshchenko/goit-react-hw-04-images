@@ -1,30 +1,22 @@
+import { useState } from 'react';
 import { Image, ImageListItem, ModalImage } from './ImageGalleryItem.styled';
-import { Component } from 'react';
+
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-export class ImageGalleryItem extends Component {
-  state = {
-    isModalOpen: false,
-  };
+export const ImageGalleryItem = ({imageData}) => {
 
-  openModal = () => {
-    console.log('image clicked');
-    this.setState({ isModalOpen: true });
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  closeModal = () => {
-    this.setState({ isModalOpen: false });
-  };
+  const openModal = () => setIsModalOpen(true);
+  
+  const closeModal = () => setIsModalOpen(false);
 
-  render() {
-    const { imageData } = this.props;
-    const { isModalOpen } = this.state;
-    return (
+   return (
       <ImageListItem>
         <Image
-          onClick={this.openModal}
+          onClick={openModal}
           src={imageData.webformatURL}
           alt={imageData.tags}
           loading="lazy"
@@ -32,7 +24,7 @@ export class ImageGalleryItem extends Component {
 
         <Modal
           isOpen={isModalOpen}
-          onRequestClose={this.closeModal}
+          onRequestClose={closeModal}
           style={{
             overlay: {
               position: 'fixed',
@@ -62,8 +54,11 @@ export class ImageGalleryItem extends Component {
             alt={imageData.tags}
             loading="lazy"
           />
-        </Modal>
+       </Modal>
+       
       </ImageListItem>
     );
-  }
-}
+  };
+
+ 
+
